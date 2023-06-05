@@ -1,8 +1,8 @@
 import os
 import random
 
-INDICE_DE_IMAGEN_PERDEDORA = 10
-INDICE_DE_IMAGEN_GANADORA = 11
+INDICE_DE_IMAGEN_PERDEDORA = 16
+INDICE_DE_IMAGEN_GANADORA = 17
 
 def imprimir_logo():
     print('''
@@ -47,6 +47,51 @@ def buscar_imagenes():
 
 
 
+        
+                    
+     _____________
+    |             |
+    |_____________| 
+
+'''
+    die2 = '''
+
+
+
+
+
+
+
+       
+                   
+     /____________ / 
+    |             | 
+    |_____________|/
+
+'''
+    die3 = '''
+
+
+
+
+
+
+
+       
+      /             /
+     /____________ / 
+    |             | /
+    |_____________|/
+
+'''
+    die4 = '''
+
+
+
+
+
+
+
         _____________
       /             /|
      /____________ / |
@@ -54,8 +99,38 @@ def buscar_imagenes():
     |_____________|/
 
 '''
-    die2 = '''
-          ╔
+    die5 = '''
+          
+          
+          
+          
+          
+          
+          ║
+        __║__________
+      /   ║         /|
+     /____________ / |
+    |             | /
+    |_____________|/
+
+'''
+    die6 = '''
+          
+          
+          
+          ║
+          ║
+          ║
+          ║
+        __║__________
+      /   ║         /|
+     /____________ / |
+    |             | /
+    |_____________|/
+
+'''
+    die7 = '''
+          
           ║
           ║
           ║
@@ -69,7 +144,22 @@ def buscar_imagenes():
     |_____________|/
 
 '''
-    die3 = '''
+    die8 = '''
+          ╔══ 
+          ║
+          ║
+          ║
+          ║
+          ║
+          ║
+        __║__________
+      /   ║         /|
+     /____________ / |
+    |             | /
+    |_____________|/
+
+'''
+    die9 = '''
           ╔═════╦  
           ║
           ║
@@ -84,7 +174,7 @@ def buscar_imagenes():
     |_____________|/
 
 '''
-    die4 = '''
+    die10 = '''
           ╔═════╦  
           ║
           ║
@@ -99,7 +189,7 @@ def buscar_imagenes():
     |_____________|/
 
 '''
-    die5 = '''
+    die11 = '''
           ╔═════╦  
           ║
           ║
@@ -114,7 +204,7 @@ def buscar_imagenes():
     |_____________|/
 
 '''
-    die6 = '''
+    die12 = '''
           ╔═════╦  
           ║
           ║
@@ -129,7 +219,7 @@ def buscar_imagenes():
     |_____________|/
 
 '''
-    die7 = '''
+    die13 = '''
           ╔═════╦  
           ║
           ║
@@ -144,7 +234,7 @@ def buscar_imagenes():
     |_____________|/
 
 '''
-    die8 = '''
+    die14 = '''
           ╔═════╦  
           ║
           ║
@@ -159,7 +249,7 @@ def buscar_imagenes():
     |_____________|/
 
 '''
-    die9 = '''
+    die15 = '''
           ╔═════╦  
           ║
           ║     @
@@ -174,7 +264,7 @@ def buscar_imagenes():
     |_____________|/
 
 '''
-    die10 = '''
+    die16 = '''
           ╔═════╦  
           ║     │
           ║     @       ¡AHORCADO!
@@ -189,7 +279,7 @@ def buscar_imagenes():
     |_____________|/
 
 '''
-    die11 = '''
+    die17 = '''
           ╔═════╦  
           ║
           ║     
@@ -204,7 +294,7 @@ def buscar_imagenes():
     |_____________|/       d   b
 
 '''
-    deaths = {0: die0, 1: die1, 2: die2, 3: die3, 4: die4, 5: die5, 6: die6, 7: die7, 8: die8, 9: die9, 10: die10, 11: die11}
+    deaths = {0: die0, 1: die1, 2: die2, 3: die3, 4: die4, 5: die5, 6: die6, 7: die7, 8: die8, 9: die9, 10: die10, 11: die11, 12: die12, 13: die13, 14: die14, 15: die15, 16: die16, 17: die17}
     return deaths
 
 def imprimir_juego_actual(imagenes, muertes, letras, letra_invalida=False):
@@ -278,7 +368,7 @@ def nueva_palabra():
 
 def perder(muertes, imagenes, letras_disponibles, palabra):
     """Devuelve si la persona ha perdido, en casso de que si imprime el final del juego"""
-    if muertes == INDICE_DE_IMAGEN_PERDEDORA:
+    if muertes >= INDICE_DE_IMAGEN_PERDEDORA:
         imprimir_juego_actual(imagenes, INDICE_DE_IMAGEN_PERDEDORA, letras_disponibles)
         print(f'Perdiste! La palabra era {palabra}')
         return True
@@ -294,6 +384,25 @@ def ganar(muertes, imagenes, letras_disponibles, palabra, descubiertas):
     else:
         return False
 
+def elegir_dificultad():
+    while True:
+        input_nivel = input('''Eliga nivel de dificultad:
+        (1) Facil 
+        (2) Normal
+        (3) Dificil
+        
+        ''')
+        
+        if input_nivel == '1':
+            return 1
+        elif input_nivel == '2':
+            return 2
+        elif input_nivel == '3':
+            return 3
+        else:
+            print('Debe elegir un nivel valido, las opciones son (1) (2) (3)')
+            continue
+
 def correr():
     #trae las imagenes que utilizaremos conforme avance el juego
     imagenes = buscar_imagenes()
@@ -301,6 +410,7 @@ def correr():
     letra_invalida = False
     palabra, indice_letra, descubiertas, muertes, letras_disponibles = nueva_palabra()
 
+    nivel = elegir_dificultad()
     while True:
         imprimir_juego_actual(imagenes, muertes, letras_disponibles, letra_invalida=letra_invalida)
 
@@ -317,13 +427,15 @@ Ingresa una letra: ''').upper()
 
         descubiertas, fallo = comparar_letras(letra, palabra, descubiertas)
         if fallo:
-            muertes += 1
+            muertes += nivel
 
         is_perdio = perder(muertes, imagenes, letras_disponibles, palabra)
         is_gano = ganar(muertes, imagenes, letras_disponibles, palabra, descubiertas)
 
         if is_perdio or is_gano: 
             if elige_si():
+                os.system('clear')
+                nivel = elegir_dificultad()
                 palabra, indice_letra, descubiertas, muertes, letras_disponibles = nueva_palabra()
 
             else:
